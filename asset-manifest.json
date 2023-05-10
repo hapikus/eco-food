@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/eco-food/static/css/main.fca76616.css",
+    "main.js": "/eco-food/static/js/main.0c0b009e.js",
+    "static/media/FriedTomatoes_Icon.png": "/eco-food/static/media/FriedTomatoes_Icon.f8a323543d9bf5b52104.png",
+    "static/media/PreparedMeat_Icon.png": "/eco-food/static/media/PreparedMeat_Icon.82b283428d0d40cd8b2e.png",
+    "static/media/FireweedShoots_Icon.png": "/eco-food/static/media/FireweedShoots_Icon.2e9f408fa752dedef386.png",
+    "static/media/Wheat_Icon.png": "/eco-food/static/media/Wheat_Icon.f8c284cde3c00371f949.png",
+    "static/media/FruitSalad_Icon.png": "/eco-food/static/media/FruitSalad_Icon.160b8d5f1026113486c5.png",
+    "static/media/CamasPaste_Icon.png": "/eco-food/static/media/CamasPaste_Icon.d915c188fefccfe76f58.png",
+    "static/media/SearedMeat_Icon.png": "/eco-food/static/media/SearedMeat_Icon.04ae9d93675d0178ec7a.png",
+    "static/media/Huckleberries_Icon.png": "/eco-food/static/media/Huckleberries_Icon.557d15fc7ccc2fe30f01.png",
+    "index.html": "/eco-food/index.html",
+    "main.fca76616.css.map": "/eco-food/static/css/main.fca76616.css.map",
+    "main.0c0b009e.js.map": "/eco-food/static/js/main.0c0b009e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fca76616.css",
+    "static/js/main.0c0b009e.js"
+  ]
+}
