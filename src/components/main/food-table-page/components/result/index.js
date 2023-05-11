@@ -8,8 +8,15 @@ const Result = () => {
 
   ecoFoodData.dishesForTable.forEach((dishes, index) => {
     let iconsArr = [];
+
     dishes[0].forEach((ingredient) => {
-      let imagesSrc = `./assets/food-icons/${ingredient.replaceAll(' ', '')}_Icon.png`;
+      let imagesSrc = {
+        letter: ingredient[0],
+        color: ecoFoodData.products[ingredient].avatarColor,
+      };
+      if (!ecoFoodData.products[ingredient].custom) {
+        imagesSrc = `./assets/food-icons/${ingredient.replaceAll(" ", "")}_Icon.png`;
+      }
       iconsArr.push(imagesSrc);
       // iconsArr.push(ingredient);
     });
@@ -36,8 +43,22 @@ const Result = () => {
       render: (icons) => {
         let avatarArray = []
         icons.forEach(icon => {
-          let imagesSrc = require(`${icon}`);
-          avatarArray.push(<Avatar src={<img src={imagesSrc} alt="icon" />} />)
+          if ((icon.letter || "").length === 1) {
+            avatarArray.push(
+              <Avatar
+                style={{
+                  backgroundColor: icon.color,
+                  verticalAlign: "middle",
+                }} 
+                size="large"
+              >
+                {icon.letter}
+              </Avatar>
+            );
+          } else {
+            let imagesSrc = require(`${icon}`);
+            avatarArray.push(<Avatar src={<img src={imagesSrc} alt="icon" />} />)
+          }
         })
         return <>{[...avatarArray]}</>;
       },

@@ -399,7 +399,7 @@ class EcoFoodData {
     this.newProduct.nutrients = +number.target.value;
   };
 
-  addNewProduct = () => {
+  addNewProduct = (form) => {
     if (
       this.products.hasOwnProperty(this.newProduct.name) ||
       this.newProduct.name === ""
@@ -439,6 +439,8 @@ class EcoFoodData {
     this.setNewProductFats(zeroTargetValue);
     this.setNewProductVitamins(zeroTargetValue);
     this.setNewProductNutrients(zeroTargetValue);
+
+    
   };
 }
 
