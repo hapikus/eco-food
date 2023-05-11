@@ -29,6 +29,12 @@ const Options = () => {
             <Input placeholder={ecoFoodData.maxProductsCount} />
           </Form.Item>
           <Form.Item
+            label="Maximum recipe length"
+            onChange={ecoFoodData.setMaxLen}
+          >
+            <Input placeholder={ecoFoodData.maxLen} />
+          </Form.Item>
+          <Form.Item
             label="How much to show"
             onChange={ecoFoodData.setHowMuchToShow}
           >

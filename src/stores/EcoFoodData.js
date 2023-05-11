@@ -8,28 +8,45 @@ function sortFunction(a, b) {
   }
 }
 
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 class EcoFoodData {
   constructor() {
     makeAutoObservable(this);
   }
 
+  colorList = [
+    "#f56a00",
+    "#7265e6",
+    "#ffbf00",
+    "#00a2ae",
+    "#ff7a45",
+    "#5b8c00",
+    "#389e0d",
+    "#003eb3",
+    "#391085",
+    "#9e1068",
+  ];
+
   maxWeight = 3000;
-  maxProductsCount = 1_000;
+  maxProductsCount = 20_000;
+  maxLen = 3;
+
   howMuchToShow = 6;
   dishes = [];
-  dishesForTable = [
-    [
-      ["Agave Leaves", "Bean Sprout"],
-      "10.9",
-      "11.0",
-      "9.2",
-      "9.8",
-      40.9,
-      "0.84",
-      2600,
-      54.81,
-    ],
-  ];
+  dishesForTable = [];
+
+  newProduct = {
+    name: "",
+    calories: 0,
+    proteins: 0,
+    fats: 0,
+    vitamins: 0,
+    nutrients: 0,
+  };
 
   products = {
     // Raw Food
@@ -200,12 +217,7 @@ class EcoFoodData {
   combinationsCount = 0;
   combinations = [];
 
-  generateCombinationsWithRepetitions = (
-    arr,
-    len,
-    current = [],
-    startIndex = 0
-  ) => {
+  generateCombinationsWithRepetitions(arr, len, current = [], startIndex = 0) {
     if (current.length === len) {
       return [current];
     }
@@ -215,25 +227,28 @@ class EcoFoodData {
         break;
       }
       result = result.concat(
-        this.generateCombinationsWithRepetitions(arr, len, current.concat(arr[i]), i)
+        this.generateCombinationsWithRepetitions(
+          arr,
+          len,
+          current.concat(arr[i]),
+          i
+        )
       );
       if (result.length >= this.maxProductsCount) {
         break;
       }
     }
     return result;
-  };
+  }
 
-  createResult = () => {
-    console.time("Execution Time");
-
+  generateCombinations() {
     const productsList = Object.keys(this.products);
     const maxCombinationsCount = Math.pow(
       productsList.length,
       this.maxProductsCount
     );
 
-    for (let len = 1; len <= this.maxProductsCount; len++) {
+    for (let len = 1; len <= this.maxLen; len++) {
       const lenCombinations = this.generateCombinationsWithRepetitions(
         productsList,
         len
@@ -256,6 +271,13 @@ class EcoFoodData {
         break;
       }
     }
+  }
+
+  createResult = () => {
+    this.dishes = [];
+    console.time("Execution Time");
+
+    this.generateCombinations();
 
     this.combinations.forEach((food) => {
       let dishesNutOverview = [[], [], [], []];
@@ -294,7 +316,6 @@ class EcoFoodData {
         ]);
       }
     });
-
     this.dishes = this.dishes.sort(sortFunction);
     console.log("this.dishes.length", this.dishes.length);
     this.dishesForTable = this.dishes.slice(0, this.howMuchToShow);
@@ -318,6 +339,106 @@ class EcoFoodData {
       this.howMuchToShow = 10;
     }
     console.log("this.howMuchToShow", this.howMuchToShow);
+  };
+
+  setMaxLen = (number) => {
+    this.maxLen = +number.target.value;
+    console.log("this.maxLen", this.maxLen);
+  };
+
+  isCorrentNumber = (num) => {
+    return isNaN(num) || num < 0;
+  };
+
+  setNewProductName = (newName) => {
+    this.newProduct.name = newName.target.value;
+  };
+
+  setNewProductCalories = (number) => {
+    let num = +number.target.value;
+    if (this.isCorrentNumber(num)) {
+      console.log("Incorrect calories");
+      return;
+    }
+    this.newProduct.calories = +number.target.value;
+  };
+
+  setNewProductProteins = (number) => {
+    let num = +number.target.value;
+    if (this.isCorrentNumber(num)) {
+      console.log("Incorrect proteins");
+      return;
+    }
+    this.newProduct.proteins = +number.target.value;
+  };
+
+  setNewProductFats = (number) => {
+    let num = +number.target.value;
+    if (this.isCorrentNumber(num)) {
+      console.log("Incorrect fats");
+      return;
+    }
+    this.newProduct.fats = +number.target.value;
+  };
+
+  setNewProductVitamins = (number) => {
+    let num = +number.target.value;
+    if (this.isCorrentNumber(num)) {
+      console.log("Incorrect vitamins");
+      return;
+    }
+    this.newProduct.vitamins = +number.target.value;
+  };
+
+  setNewProductNutrients = (number) => {
+    let num = +number.target.value;
+    if (this.isCorrentNumber(num)) {
+      console.log("Incorrect nutrients");
+      return;
+    }
+    this.newProduct.nutrients = +number.target.value;
+  };
+
+  addNewProduct = () => {
+    if (
+      this.products.hasOwnProperty(this.newProduct.name) ||
+      this.newProduct.name === ""
+    ) {
+      console.log("Incorrect product name");
+      return;
+    }
+
+    this.products[this.newProduct.name] = {
+      weight: this.newProduct.calories,
+      nut: [
+        this.newProduct.proteins,
+        this.newProduct.fats,
+        this.newProduct.vitamins,
+        this.newProduct.nutrients,
+      ],
+      avatarColor:
+        this.colorList[randomIntFromInterval(0, this.colorList.length - 1)],
+      custom: true,
+    };
+
+    console.log("New Product added");
+
+    let zeroTargetValue = {
+      target: {
+        value: 0,
+      },
+    };
+
+    this.setNewProductName({
+      target: {
+        value: "",
+      },
+    });
+    this.setNewProductCalories(zeroTargetValue);
+    this.setNewProductProteins(zeroTargetValue);
+    this.setNewProductFats(zeroTargetValue);
+    this.setNewProductVitamins(zeroTargetValue);
+    this.setNewProductNutrients(zeroTargetValue);
   };
 }
 

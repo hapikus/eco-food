@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Collapse } from 'antd';
+import Options from './components/options';
+import AddProduct from './components/add-product';
 import FoodTable from './components/food-table';
 import Result from './components/result';
-import Options from './components/options';
 import styles from './food-table-page.module.css';
 
 const FoodTablePage = () => {
@@ -16,10 +17,13 @@ const FoodTablePage = () => {
         <Collapse.Panel header="Options" key="1">
           <Options />
         </Collapse.Panel>
-        <Collapse.Panel header="Food table" key="2">
+        <Collapse.Panel header="Add product" key="2">
+          <AddProduct />
+        </Collapse.Panel>
+        <Collapse.Panel header="Food table" key="3">
           <FoodTable />
         </Collapse.Panel>
-        <Collapse.Panel header="Result" key="3">
+        <Collapse.Panel header="Result" key="4">
           <Result />
         </Collapse.Panel>
       </Collapse>
